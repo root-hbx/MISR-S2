@@ -27,7 +27,19 @@ We provide two ways to load the BreizhSR dataset using PyTorch: using `rasterio`
 python data_gen/preprocess_data.py path/to/where/you/stored/BreizhSR/
 ```
 
+actual cmd:
+
+```sh
+python data_gen/preprocess_data.py ./BreizhSR/
+```
+
 The resulting dataset will be stored by default in the `preprocessed/` subfolder. You can then load this dataset using `utils/dataloader.py`.
+
+actual cmd:
+
+```sh
+python -m utils.dataloader
+```
 
 If this seems inconvenient for you, or you just want to access the raw data, you can use the `BreizhSRDataset` class from the `data_gen/dataset.py` module, which reads the original image rasters using `rasterio`.
 
@@ -41,6 +53,17 @@ CUDA_VISIBLE_DEVICES=0 python tasks/trainer.py --config configs/rrdb/rrdb.yaml -
 
 # train SRDiff conditioned by the backbone model
 CUDA_VISIBLE_DEVICES=0 python tasks/trainer.py --config configs/diffsr_sat.yaml --exp_name sisr/srdiff_rrdb_ckpt --hparams="rrdb_ckpt=checkpoints/sisr/rrdb_ckpt"
+```
+
+actual cmd:
+
+```sh
+# ensure path correct
+cd $MISR-S2
+# pretrain backbone model (RRDB or other SISR model)
+CUDA_VISIBLE_DEVICES=0 python -m tasks.trainer --config configs/rrdb/rrdb.yaml --exp_name sisr/rrdb_ckpt --reset
+# train SRDiff conditioned by the backbone model
+CUDA_VISIBLE_DEVICES=0 python -m tasks.trainer --config configs/diffsr_sat.yaml --exp_name sisr/srdiff_rrdb_ckpt --hparams="rrdb_ckpt=checkpoints/sisr/rrdb_ckpt"
 ```
 
 ### Multi-image super-resolution (MISR)

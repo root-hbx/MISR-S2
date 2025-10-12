@@ -1,5 +1,6 @@
 import sys
-sys.path.append('/path/to/MISR-S2')
+# TODO(bxhu): set your own project path here
+sys.path.append('/home/starlink/bxhu/MISR-S2/')
 
 import importlib
 import os
@@ -24,7 +25,8 @@ from utils.dataloader import BreizhSRDataset
 import warnings
 warnings.filterwarnings("ignore")
 
-path = "/path/to/breizhsr"
+# TODO(bxhu): set your own data path here
+path = "/home/starlink/bxhu/MISR-S2/BreizhSR"
 
 
 class Trainer:
