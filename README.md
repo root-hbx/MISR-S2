@@ -63,7 +63,12 @@ cd $MISR-S2
 # pretrain backbone model (RRDB or other SISR model)
 CUDA_VISIBLE_DEVICES=0 python -m tasks.trainer --config configs/rrdb/rrdb.yaml --exp_name sisr/rrdb_ckpt --reset --hparams="batch_size=4"
 # train SRDiff conditioned by the backbone model
-CUDA_VISIBLE_DEVICES=0 python -m tasks.trainer --config configs/diffsr_sat.yaml --exp_name sisr/srdiff_rrdb_ckpt --hparams="rrdb_ckpt=checkpoints/sisr/rrdb_ckpt"
+CUDA_VISIBLE_DEVICES=0 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True \
+python -m tasks.trainer \
+  --config configs/diffsr_sat.yaml \
+  --exp_name sisr/srdiff_rrdb_ckpt \
+  --reset \
+  --hparams="rrdb_ckpt=checkpoints/sisr/rrdb_ckpt,rrdb_num_block=15,batch_size=2,eval_batch_size=2,test_batch_size=2,num_workers=0,ds_workers=0"
 ```
 
 ### Multi-image super-resolution (MISR)
